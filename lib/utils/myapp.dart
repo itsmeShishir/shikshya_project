@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:hamroshop/screen/Dashboard/dashboard.dart';
+import 'package:hamroshop/screen/homeScreen/homeScree.dart';
+import 'package:hamroshop/screen/login/login.dart';
+import 'package:hamroshop/screen/register/register.dart';
 import 'package:hamroshop/screen/splash/splash_screen.dart';
 
 class MyApp extends StatelessWidget {
@@ -11,7 +15,11 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       initialRoute: "/",
       routes: {
-        "/": (context) => const SplashScreen(),
+        "/": (context) => SplashScreen(),
+        "/login": (context) => LoginScreen(),
+        "/register": (context) => RegisterScreen(),
+        "/home": (context) => HomeScreen(),
+        "/dash": (context) => Dashboard(),
       },
     );
   }

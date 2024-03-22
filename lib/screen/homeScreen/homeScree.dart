@@ -4,8 +4,6 @@ import 'package:hamroshop/screen/homeScreen/product.dart';
 import 'package:hamroshop/screen/homeScreen/sliderscreen.dart';
 import 'package:hamroshop/widget/cardswidget.dart';
 
-import '../../dummydata/productdata.dart';
-
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 

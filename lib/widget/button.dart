@@ -8,9 +8,21 @@ class SharedButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
-      onPressed: onPressed,
-      child: Text(text),
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: MaterialButton(
+        onPressed: onPressed,
+        child: Text(
+          "${text}",
+          style: TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+        color: Colors.cyan,
+        height: 55,
+        minWidth: 260,
+      ),
     );
   }
 }

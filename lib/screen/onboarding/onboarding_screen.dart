@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:hamroshop/screen/login/login.dart';
+import 'package:hamroshop/widget/button.dart';
 
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({super.key});
@@ -22,20 +24,23 @@ class OnboardingScreenState extends State<OnboardingScreen> {
           const SizedBox(
             height: 100,
           ),
-          Text("Hamro Shop"),
+          const Text("Hamro Shop"),
           const SizedBox(
             height: 100,
           ),
-          Text(
+          const Text(
             "Buy and sell the car parts It is the Ecommerce Market for Cars . Interdum dictum tempus, interdum at dignissim metus. Ultricies sed nunc.",
           ),
           const SizedBox(
             height: 10,
           ),
-          MaterialButton(
-            onPressed: () {},
-            child: Text("Get Started"),
-          ),
+          SharedButton(
+            onPressed: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => const LoginScreen()));
+            },
+            text: "Get Started",
+          )
         ],
       )),
     );

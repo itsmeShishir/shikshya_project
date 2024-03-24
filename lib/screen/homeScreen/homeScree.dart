@@ -14,23 +14,28 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
+    final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
     return Scaffold(
+      key: _scaffoldKey,
       body: SafeArea(
         child: SingleChildScrollView(
           scrollDirection: Axis.vertical,
           child:
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             SizedBox(
               child: IconButton(
-                onPressed: () {},
-                icon: Icon(Icons.navigation),
+                onPressed: () {
+                  _scaffoldKey.currentState?.openDrawer();
+                },
+                icon: const Icon(Icons.navigation_outlined),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
+            const Padding(
+              padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
               child: Text(
                 "Hi There,",
                 style: TextStyle(
@@ -39,8 +44,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
+            const Padding(
+              padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
               child: Text(
                 "Shishir",
                 style: TextStyle(
@@ -50,11 +55,11 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
             const SliderScreen(),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
+            const Padding(
+              padding:  EdgeInsets.fromLTRB(10, 0, 0, 0),
               child: Text(
                 "Trending",
                 style: TextStyle(
@@ -63,14 +68,46 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: const ProductsWidget(),
+            const Padding(
+              padding: EdgeInsets.all(8.0),
+              child: ProductsWidget(),
             ),
           ]),
+        ),
+      ),
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: <Widget>[
+            const DrawerHeader(
+              decoration: BoxDecoration(
+                color: Colors.blue,
+              ),
+              child: Text(
+                'Drawer Header',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 24,
+                ),
+              ),
+            ),
+            ListTile(
+              title: const Text('Item 1'),
+              onTap: () {
+                Navigator.pop(context); 
+              },
+            ),
+            ListTile(
+              title: const Text('Item 2'),
+              onTap: () {
+                Navigator.pop(context);
+              },
+            ),
+            // Add more ListTiles for additional items
+          ],
         ),
       ),
     );

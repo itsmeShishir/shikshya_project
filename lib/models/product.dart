@@ -1,8 +1,8 @@
-class Product {
-  final String name;
-  final String imageUrl;
-  final double price;
-  final double rating;
+class Product{
+  String name;
+  String imageUrl;
+  double rating;
+  double price;
 
-  Product({required this.name, required this.imageUrl, required this.price, required this.rating});
+  Product({required this.name,required this.imageUrl,required this.rating,required this.price});
 }

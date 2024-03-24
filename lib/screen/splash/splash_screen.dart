@@ -29,11 +29,11 @@ class _SplashScreenState extends State<SplashScreen> {
               const SizedBox(
                 height: 60,
               ),
-              Image.asset(
-                "assets/image/logo-color.png",
-                width: 150,
-                height: 150,
-              ),
+              // Image.asset(
+              //   "assets/image/logo-color.png",
+              //   width: 150,
+              //   height: 150,
+              // ),
               const SizedBox(
                 height: 20,
               ),

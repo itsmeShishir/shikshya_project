@@ -31,7 +31,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 onPressed: () {
                   _scaffoldKey.currentState?.openDrawer();
                 },
-                icon: const Icon(Icons.navigation_outlined),
+                icon: const Icon(Icons.menu),
               ),
             ),
             const Padding(

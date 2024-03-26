@@ -1,7 +1,8 @@
-
 import 'package:hamroshop/models/review.dart';
+
 import './image.dart';
 import 'package:json_annotation/json_annotation.dart';
+
 part 'products.g.dart';
 
 @JsonSerializable()

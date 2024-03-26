@@ -1,4 +1,6 @@
 import 'package:objectbox/objectbox.dart';
+import '../models/image.dart';
+import '../models/review.dart';
 
 @Entity()
 class ProductModalObjectBox{

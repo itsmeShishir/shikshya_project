@@ -18,7 +18,7 @@ class _ProductScreenState extends State<ProductScreen> {
   @override
   void initState() {
     super.initState();
-    _displayedProducts = dummyProducts; // Initialize with all products
+    _displayedProducts = dummyProducts; 
   }
 
   void _filterProducts(String query) {

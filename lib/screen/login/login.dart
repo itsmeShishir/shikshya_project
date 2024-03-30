@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:hamroshop/models/userModel.dart';
+import 'package:hamroshop/repository/userRepository.dart';
+import 'package:hamroshop/screen/Dashboard/dashboard.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -8,7 +12,55 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final GlobalKey<FormState> formGlobalKey = GlobalKey<FormState>();
+  _navigateToScreen(bool isLogin) {
+    if (isLogin) {
+      Navigator.push(context, MaterialPageRoute(builder: (context) {
+        return Dashboard();
+      }));
+    } else {
+      print("Error");
+    }
+  }
+
+  _loginUser(User user) async {
+    try {
+      UserRepository userRepository = UserRepository();
+
+      bool isLogin = await userRepository.loginUser(user);
+
+      if (isLogin) {
+        _navigateToScreen(true);
+      } else {
+        _navigateToScreen(false);
+      }
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
+  var emailController = TextEditingController();
+  var passwordController = TextEditingController();
+  String? email;
+  String? password;
+
+  @override
+  void initState() {
+    super.initState();
+
+    autoLogin();
+  }
+
+  void autoLogin() async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+
+    String? token = sharedPreferences.getString('token');
+
+    print(token);
+
+    if (token != null && token.isNotEmpty) {
+      _navigateToScreen(true);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -22,13 +74,14 @@ class _LoginScreenState extends State<LoginScreen> {
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: SingleChildScrollView(
+            scrollDirection: Axis.vertical,
             child: Column(
               children: [
                 const SizedBox(
                   height: 50,
                 ),
-                Image.network(
-                  "https://images.unsplash.com/photo-1599305445671-ac291c95aaa9?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8bG9nb3xlbnwwfHwwfHx8MA%3D%3D",
+                Image.asset(
+                  "assets/image/logo-no-background.png",
                   width: isDesktopOrIpad ? 150 : 120,
                   height: isDesktopOrIpad ? 150 : 120,
                 ),
@@ -50,16 +103,16 @@ class _LoginScreenState extends State<LoginScreen> {
                 Container(
                   width: isDesktopOrIpad ? 500 : double.infinity,
                   child: Form(
-                    key: formGlobalKey,
                     child: Column(
                       children: [
                         TextFormField(
-                          keyboardType: TextInputType.text,
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Please Enter Email';
-                            }
-                            return null;
+                          key: ValueKey('txtEmail'),
+                          controller: emailController,
+                          keyboardType: TextInputType.emailAddress,
+                          onChanged: (value) {
+                            setState(() {
+                              email = value;
+                            });
                           },
                           decoration: const InputDecoration(
                               border: OutlineInputBorder(
@@ -72,13 +125,13 @@ class _LoginScreenState extends State<LoginScreen> {
                           height: 15,
                         ),
                         TextFormField(
+                          key: ValueKey('txtPassword'),
+                          controller: passwordController,
                           obscureText: true,
-                          keyboardType: TextInputType.text,
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Please Enter Password';
-                            }
-                            return null;
+                          onChanged: (value) {
+                            setState(() {
+                              password = value;
+                            });
                           },
                           decoration: const InputDecoration(
                               border: OutlineInputBorder(
@@ -96,8 +149,13 @@ class _LoginScreenState extends State<LoginScreen> {
                               primary: Colors.green,
                               fixedSize: Size(buttonWidth, buttonHeight),
                             ),
+                            key: ValueKey('btnLogin'),
                             onPressed: () {
-                              Navigator.pushNamed(context, "/dash");
+                              User user = User(
+                                email: emailController.text,
+                                password: passwordController.text,
+                              );
+                              _loginUser(user);
                             },
                             child: const Text(
                               "Login",

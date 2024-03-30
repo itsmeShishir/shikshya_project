@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:hamroshop/models/product.dart';
 import 'package:hamroshop/screen/homeScreen/product.dart';
 import 'package:hamroshop/screen/homeScreen/sliderscreen.dart';
-import 'package:hamroshop/widget/cardswidget.dart';
+import 'package:hamroshop/screen/homeScreen/user.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -34,26 +33,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 icon: const Icon(Icons.menu),
               ),
             ),
-            const Padding(
-              padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
-              child: Text(
-                "Hi There,",
-                style: TextStyle(
-                  fontSize: 25,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-            ),
-            const Padding(
-              padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
-              child: Text(
-                "Shishir",
-                style: TextStyle(
-                  fontSize: 30,
-                  fontWeight: FontWeight.w900,
-                ),
-              ),
-            ),
+            UserData(),
             const SliderScreen(),
             const SizedBox(
               height: 10,

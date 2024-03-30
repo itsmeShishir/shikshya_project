@@ -1,4 +1,3 @@
-
 import 'package:dio/dio.dart';
 import 'package:hamroshop/util/urls.dart';
 
@@ -7,13 +6,16 @@ class HttpServices {
   factory HttpServices() => _instance;
   HttpServices.internal();
   Dio? _dio;
-  Dio getDioInstaDnce() {
+  Dio getDioInstance() {
     if (_dio == null) {
-      return Dio(BaseOptions(baseUrl: baseUrl, connectTimeout: const Duration(milliseconds: 5000)));
+      return Dio(
+        BaseOptions(
+          baseUrl: baseUrl,
+          connectTimeout: const Duration(milliseconds: 5000),
+        ),
+      );
     } else {
       return _dio!;
     }
   }
-
-  getDioInstance() {}
 }

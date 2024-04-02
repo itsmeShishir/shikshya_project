@@ -1,23 +1,18 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:hamroshop/models/product.dart';
 
-class ProductCards extends StatelessWidget {
+class ProductCard extends StatelessWidget {
   final String productImagePath;
   final String productName;
   final String productPrice;
   final Function() onPressed;
-  
-ProductCards(
-  {
-    required this.productName,
-    required this.productPrice,
-    required this.productImagePath,
-    required this.onPressed,
-  }
-);
 
+  const ProductCard(
+      {required this.productImagePath,
+      required this.productName,
+      required this.onPressed,
+      required this.productPrice});
   @override
   Widget build(BuildContext context) {
     return InkWell(

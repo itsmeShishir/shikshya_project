@@ -1,8 +1,8 @@
 // home
-const baseUrl = "http://192.168.1.13:2000/api/v2/";
+// const baseUrl = "http://192.168.1.13:2000/api/v2/";
 
 // durshiksha
-// const baseUrl = "http://192.168.1.245:2000/api/v2/";
+const baseUrl = "http://192.168.1.245:2000/api/v2/";
 
 const loginUrl = "login";
 const registerUrl = "register";

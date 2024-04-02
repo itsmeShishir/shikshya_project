@@ -53,7 +53,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             const Padding(
               padding: EdgeInsets.all(8.0),
-              child: ProductsWidget(),
+              child: Text("Hello Product Here"),
             ),
           ]),
         ),

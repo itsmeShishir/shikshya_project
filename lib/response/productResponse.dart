@@ -1,6 +1,5 @@
+import 'package:hamroshop/models/products.dart';
 import 'package:json_annotation/json_annotation.dart';
-
-import '../models/products.dart';
 part 'productResponse.g.dart';
 
 @JsonSerializable()

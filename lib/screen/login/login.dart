@@ -146,7 +146,6 @@ class _LoginScreenState extends State<LoginScreen> {
                         Center(
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
-                              primary: Colors.green,
                               fixedSize: Size(buttonWidth, buttonHeight),
                             ),
                             key: ValueKey('btnLogin'),

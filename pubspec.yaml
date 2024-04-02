@@ -48,6 +48,8 @@ dependencies:
   build_runner: ^2.4.8
   motion_toast: ^2.1.9
   cached_network_image: ^3.3.1
+  get: ^4.6.6
+  rating_dialog: ^2.0.4
 
 
 

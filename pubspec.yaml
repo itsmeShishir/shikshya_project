@@ -47,6 +47,7 @@ dependencies:
   json_serializable: ^6.7.1
   build_runner: ^2.4.8
   motion_toast: ^2.1.9
+  cached_network_image: ^3.3.1
 
 
 

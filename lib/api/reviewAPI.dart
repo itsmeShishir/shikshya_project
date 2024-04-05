@@ -1,9 +1,8 @@
 import 'dart:io';
-
-import 'package:dio/dio.dart';
 import 'package:hamroshop/api/httpservices.dart';
 import 'package:hamroshop/response/reviewResponse.dart';
-import 'package:hamroshop/util/urls.dart';
+import 'package:hamroshop/util/url.dart';
+import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ReviewApi {

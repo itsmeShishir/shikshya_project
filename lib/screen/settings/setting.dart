@@ -20,25 +20,25 @@ class _SettingScrenState extends State<SettingScren> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // body: Body(),
-      body: Center(
-        child: Column(
-          children: [
-            ElevatedButton(
-              onPressed: () {
-                logout();
-              },
-              child: Text("Logout"),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                logout();
-              },
-              child: Text("Change Password"),
-            ),
-          ],
-        ),
-      ),
+      body: Body(),
+      // body: Center(
+      //   child: Column(
+      //     children: [
+      //       ElevatedButton(
+      //         onPressed: () {
+      //           logout();
+      //         },
+      //         child: Text("Logout"),
+      //       ),
+      //       ElevatedButton(
+      //         onPressed: () {
+      //           logout();
+      //         },
+      //         child: Text("Change Password"),
+      //       ),
+      //     ],
+      //   ),
+      // ),
     );
   }
 }

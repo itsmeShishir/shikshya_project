@@ -1,11 +1,10 @@
 import 'dart:io';
-import 'package:dio/dio.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:hamroshop/api/httpservices.dart';
 import 'package:hamroshop/response/orderResponse.dart';
+import 'package:hamroshop/util/url.dart';
+import 'package:dio/dio.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
-import '../util/urls.dart';
 
 class OrderAPI {
   Future<OrderResponse> getOrderHistory() async {

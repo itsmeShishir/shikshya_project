@@ -1,27 +1,29 @@
-
-import 'package:dio/dio.dart';
 import 'package:hamroshop/response/productResponse.dart';
-import 'package:hamroshop/util/urls.dart';
-
+import 'package:hamroshop/util/url.dart';
+import 'package:dio/dio.dart';
 
 class ProductAPI {
-  Future<ProductResponse?> getproduct(String? search) async {
-    Future.delayed(const Duration(seconds: 2), () {});
-    ProductResponse? productResponse;
-    Response response;
+  Dio _dio = Dio();
 
+  Future<ProductResponse?> getProducts(String? search) async {
     try {
-      var dio = Dio();
+      // Delay execution for 2 seconds (if needed for some reason)
+      // await Future.delayed(const Duration(seconds: 2));
+
       var url = baseUrl + getProductsUrl;
-      response = await dio.get(url, queryParameters: {'keyword': search}
-      );
+      Response response = await _dio.get(url, queryParameters: {'keyword': search});
 
       if (response.statusCode == 200) {
-        productResponse = ProductResponse.fromJson(response.data);
+        return ProductResponse.fromJson(response.data);
+      } else {
+        // Handle non-200 status codes
+        print('Request failed with status: ${response.statusCode}');
+        return null;
       }
     } catch (e) {
-      print(e.toString());
+      // Handle Dio errors
+      print('Error while fetching products: $e');
+      return null;
     }
-    return productResponse;
   }
 }

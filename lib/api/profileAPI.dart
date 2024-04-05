@@ -1,9 +1,9 @@
-import 'package:dio/dio.dart';
+//he
+import 'package:hamroshop/api/httpservices.dart';
 import 'package:hamroshop/response/profileResponse.dart';
-import 'package:hamroshop/util/urls.dart';
+import 'package:hamroshop/util/url.dart';
+import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
-import 'httpservices.dart';
 
 class ProfileAPI {
   Future<ProfileResponse?> getprofile() async {

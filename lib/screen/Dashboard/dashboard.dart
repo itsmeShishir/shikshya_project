@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hamroshop/screen/blogs/blog.dart';
+import 'package:hamroshop/screen/cart/screen.dart';
 import 'package:hamroshop/screen/homeScreen/homeScree.dart';
 import 'package:hamroshop/screen/settings/setting.dart';
 
@@ -13,7 +14,7 @@ class _DashboardState extends State<Dashboard> {
 
   static List<Widget> _pages = [
     HomeScreen(),
-    ProductScreen(),
+    CartScreen(),
     SettingScren(),
   ];
 
@@ -35,7 +36,7 @@ class _DashboardState extends State<Dashboard> {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.newspaper),
-            label: 'Product',
+            label: 'Cart',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.settings),

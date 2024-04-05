@@ -1,11 +1,13 @@
-import "../models/order.dart";
-import "package:json_annotation/json_annotation.dart";
-part "orderResponse.g.dart";
+import 'package:json_annotation/json_annotation.dart';
+import '../models/order.dart';
+part 'orderResponse.g.dart';
+
 @JsonSerializable()
-class OrderResponse{
+class OrderResponse {
   bool? success;
-  List<Order>? order;
-  OrderResponse({this.success, this.order});
-  factory OrderResponse.fromJson(Map<String, dynamic> json) => _$OrderResponseFromJson(json);
-  Map<String, dynamic> toJson()=> _$OrderResponseToJson(this);
+  List<Order>? orders;
+  OrderResponse({this.success, this.orders});
+  factory OrderResponse.fromJson(Map<String, dynamic> json) =>
+      _$OrderResponseFromJson(json);
+  Map<String, dynamic> toJson() => _$OrderResponseToJson(this);
 }

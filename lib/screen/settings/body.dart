@@ -65,17 +65,11 @@ class _BodyState extends State<Body> {
                     text: "Change Password",
                     icon: Setting,
                     press: () {
+                      Navigator.pushNamed(context, "/changepassword");
                     },
                   ),
-                
                   ProfileMenu(
                     text: "My Order",
-                    icon: Question,
-                    press: () {
-                    },
-                  ),
-                   ProfileMenu(
-                    text: "My Location",
                     icon: Question,
                     press: () {
                     },

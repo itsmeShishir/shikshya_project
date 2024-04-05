@@ -50,6 +50,8 @@ dependencies:
   cached_network_image: ^3.3.1
   get: ^4.6.6
   rating_dialog: ^2.0.4
+  http: ^1.2.1
+  sqflite: ^2.3.3
 
 
 

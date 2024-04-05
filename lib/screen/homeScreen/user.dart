@@ -33,7 +33,7 @@ class _UserDataState extends State<UserData> {
                     ),
                   ),
                   Text(
-                    profileResponse!.email!.toString(),
+                    profileResponse!.name!.toString(),
                     style: TextStyle(
                       fontSize: 30,
                       fontWeight: FontWeight.w900,

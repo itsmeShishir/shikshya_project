@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:hamroshop/screen/blogs/blog.dart';
 import 'package:hamroshop/screen/homeScreen/product.dart';
 import 'package:hamroshop/screen/homeScreen/sliderscreen.dart';
 import 'package:hamroshop/screen/homeScreen/user.dart';
+import 'package:hamroshop/utils/productcard.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -39,7 +41,7 @@ class _HomeScreenState extends State<HomeScreen> {
               height: 10,
             ),
             const Padding(
-              padding:  EdgeInsets.fromLTRB(10, 0, 0, 0),
+              padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
               child: Text(
                 "Trending",
                 style: TextStyle(
@@ -48,12 +50,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
             ),
-            const SizedBox(
-              height: 10,
-            ),
-            const Padding(
-              padding: EdgeInsets.all(8.0),
-              child: Text("Hello Product Here"),
+             SizedBox(
+              height: 900,
+              child: ProductHome(),
             ),
           ]),
         ),
@@ -77,7 +76,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ListTile(
               title: const Text('Item 1'),
               onTap: () {
-                Navigator.pop(context); 
+                Navigator.pop(context);
               },
             ),
             ListTile(
@@ -86,7 +85,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 Navigator.pop(context);
               },
             ),
-            // Add more ListTiles for additional items
           ],
         ),
       ),

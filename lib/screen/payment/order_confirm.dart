@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:hamroshop/api/httpservices.dart';
 import 'package:hamroshop/api/orderAPI.dart';
 import 'package:hamroshop/models/cart_model.dart';
 import 'package:hamroshop/screen/cart/cart_provider.dart';
+import 'package:hamroshop/util/url.dart';
+import 'package:khalti_flutter/khalti_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -17,6 +20,7 @@ class _ConfirmOrderScreenState extends State<ConfirmOrderScreen> {
   double? getTotalAmount;
 
   String? productName;
+  String? productId;
   String? productImage;
   var address;
 
@@ -132,53 +136,52 @@ class _ConfirmOrderScreenState extends State<ConfirmOrderScreen> {
   }
 
   Widget _buildCartItem(String productName, String productImage) {
-  return Card(
-    child: Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              CachedNetworkImage(
-                imageUrl: productImage,
-                placeholder: (context, url) => CircularProgressIndicator(),
-                errorWidget: (context, url, error) => Icon(Icons.error),
-                fit: BoxFit.cover,
-                height: 130,
-              ),
-              const SizedBox(width: 10),
-              Expanded(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(productName,
-                            style: TextStyle(
-                                fontSize: 16, fontWeight: FontWeight.w500)),
-                      ],
-                    ),
-                    const SizedBox(height: 5),
-                    // Add any other details you want to display
-                  ],
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                CachedNetworkImage(
+                  imageUrl: productImage,
+                  placeholder: (context, url) => CircularProgressIndicator(),
+                  errorWidget: (context, url, error) => Icon(Icons.error),
+                  fit: BoxFit.cover,
+                  height: 130,
                 ),
-              ),
-            ],
-          ),
-        ],
+                const SizedBox(width: 10),
+                Expanded(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(productName,
+                              style: TextStyle(
+                                  fontSize: 16, fontWeight: FontWeight.w500)),
+                        ],
+                      ),
+                      const SizedBox(height: 5),
+                      // Add any other details you want to display
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
-    ),
-  );
-}
+    );
+  }
 
-
- Widget _buildPriceCalculation() {
+  Widget _buildPriceCalculation() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -249,7 +252,7 @@ class _ConfirmOrderScreenState extends State<ConfirmOrderScreen> {
   Widget _buildPaymentButton() {
     return ElevatedButton(
       onPressed: () async {
-        await makePayment(getTotalAmount!.toStringAsFixed(0));
+        await payWithKhalti(getTotalAmount.toString() * 10);
       },
       style: ElevatedButton.styleFrom(
         backgroundColor: const Color.fromARGB(255, 14, 234, 117),
@@ -268,18 +271,93 @@ class _ConfirmOrderScreenState extends State<ConfirmOrderScreen> {
     );
   }
 
-  Future<void> makePayment(String total) async {
-    // Implement payment logic here
+  payWithKhalti(String? total) {
+    KhaltiScope.of(context).pay(
+      config: PaymentConfig(
+          amount: getTotalAmount!.toInt() * 10,
+          productIdentity: productId.toString(),
+          productName: productName.toString(),
+          mobileReadOnly: false),
+      preferences: [
+        PaymentPreference.khalti,
+      ],
+      onSuccess: onSuccess,
+      onFailure: onFailure,
+      onCancel: onCancel,
+    );
   }
 
-  Future<Map<String, dynamic>> createPaymentIntent(
-      String amount, String currency) async {
-    // Implement payment intent creation logic here
-    return {};
+  void onCancel() {
+    debugPrint("cancelled");
   }
 
-  String calculateAmount(String amount) {
-    final a = (int.parse(amount)) * 100;
-    return a.toString();
+  void onFailure(PaymentFailureModel failure) {
+    debugPrint(failure.toString());
+  }
+
+  Future createOrderHistory({
+    ProductName,
+    ProductImage,
+    ProductPrice,
+    PaymentType,
+    Address,
+  }) async {
+    print(ProductName);
+    try {
+      var url = baseUrl + createOrder;
+      var dio = HttpServices().getDioInstance();
+      SharedPreferences preferences;
+      preferences = await SharedPreferences.getInstance();
+      var email = preferences.getString('email');
+      var response = await dio.post(url, data: {
+        "ProductName": ProductName,
+        "ProductImage": ProductImage,
+        "ProductPrice": ProductPrice,
+        "PaymentType": PaymentType,
+        "Address": Address,
+        "Email": email,
+      });
+      print(response.statusCode);
+      if (response.statusCode == 201) {
+        return true;
+      }
+    } catch (e) {
+      debugPrint(e.toString());
+    }
+    return true;
+  }
+
+  void onSuccess(PaymentSuccessModel success) async {
+    try {
+      bool ordercreate = await createOrderHistory(
+        ProductName: productName,
+        ProductImage: productImage,
+        ProductPrice: getTotalAmount.toString(),
+        PaymentType: "khalti",
+        Address: address,
+      );
+
+      if (ordercreate) {
+        Provider.of<CartProvider>(context, listen: false).clearCart();
+        Navigator.pushNamed(context, "/dash");
+      } else {
+        showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              title: Text("Order Failed"),
+              content: Text("Failed to create order due to api"),
+              actions: [
+                TextButton(onPressed: (){
+                  Navigator.pop(context);
+                }, child: Text("OK "))
+              ],
+            );
+          },
+        );
+      }
+    } catch (e) {
+      debugPrint("Error: ${e}");
+    }
   }
 }

@@ -51,7 +51,12 @@ class CartProvider with ChangeNotifier {
   double offerPrice = double.parse(product['offerPrice'] ?? '0.0');
   removeTotalPrice(offerPrice);
   notifyListeners();
-}
+  
+  }
+ void clearCart() {
+    _cartItems.clear();
+    notifyListeners(); // Notify listeners after clearing the cart
+  }
 
 
   void addTotalPrice(double productPrice) {
